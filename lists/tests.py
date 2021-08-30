@@ -3,19 +3,15 @@ from lists.models import Item, List
 
 
 class HomePageTest(TestCase):
-    """home page test"""
 
     def test_uses_home_template(self):
-        """test: using a home template"""
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
 
 
 class ListAndItemModelsTest(TestCase):
-    """list item model test"""
 
     def test_saving_and_retrieving_items(self):
-        """test for saving and retrieving list items"""
         list_ = List()
         list_.save()
 
@@ -44,16 +40,13 @@ class ListAndItemModelsTest(TestCase):
 
 
 class ListViewTest(TestCase):
-    """list view test"""
 
     def test_uses_list_template(self):
-        """test: the list template is used"""
         list_ = List.objects.create()
         response = self.client.get(f'/lists/{list_.id}/')
         self.assertTemplateUsed(response, 'list.html')
 
     def test_displays_only_items_for_that_list(self):
-        """test: items are displayed only for this list"""
         correct_list = List.objects.create()
         Item.objects.create(text='itemey 1', list=correct_list)
         Item.objects.create(text='itemey 2', list=correct_list)
@@ -69,7 +62,6 @@ class ListViewTest(TestCase):
         self.assertNotContains(response, 'другой элемент 2 списка')
 
     def test_passes_correct_list_to_template(self):
-        """test: the correct list template is passed"""
         other_list = List.objects.create()
         correct_list = List.objects.create()
         response = self.client.get(f'/lists/{correct_list.id}/')
@@ -77,27 +69,22 @@ class ListViewTest(TestCase):
 
 
 class NewListTest(TestCase):
-    """testing a new list"""
 
     def test_can_save_a_POST_request(self):
-        """test: can save a post request"""
         self.client.post('/lists/new', data={'item_text': 'A new list item'})
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, 'A new list item')
 
     def test_redirects_after_POST(self):
-        """test: redirects after a post request"""
         response = self.client.post('/lists/new', data={'item_text': 'A new list item'})
         new_list = List.objects.first()
         self.assertRedirects(response, f'/lists/{new_list.id}/')
 
 
 class NewItemTest(TestCase):
-    """testing a new list item"""
 
     def test_can_save_a_POST_request_to_an_existing_list(self):
-        """test: can save a post request to an existing list"""
         other_list = List.objects.create()
         correct_list = List.objects.create()
 
@@ -112,7 +99,6 @@ class NewItemTest(TestCase):
         self.assertEqual(new_item.list, correct_list)
 
     def test_redirects_to_list_view(self):
-        """test: redirects to the list view"""
         other_list = List.objects.create()
         correct_list = List.objects.create()
 

@@ -6,7 +6,6 @@ REPO_URL = 'https://Ivan_Kitayeu@bitbucket.org/Ivan_Kitayeu/superlists.git'
 
 
 def deploy():
-    """deploy"""
     site_folder = f'/home/{env.user}/sites/{env.host}'
     source_folder = site_folder + '/source'
     _create_directory_structure_if_necessary(site_folder)
@@ -18,13 +17,11 @@ def deploy():
 
 
 def _create_directory_structure_if_necessary(site_folder):
-    """create a directory structure, if necessary"""
     for subfolder in ('database', 'static', 'virtualenv', 'source'):
         run(f'mkdir -p {site_folder}/{subfolder}')
 
 
 def _get_latest_source(source_folder):
-    """get the latest source code"""
     if exists(source_folder + '/.git'):
         run(f'cd {source_folder} && git fetch')
     else:
@@ -34,7 +31,6 @@ def _get_latest_source(source_folder):
 
 
 def _update_settings(source_folder, site_name):
-    """update settings"""
     settings_path = source_folder + '/superlists/settings.py'
     sed(settings_path, "DEBUG = True", "DEBUG = False")
     sed(settings_path,
@@ -50,7 +46,6 @@ def _update_settings(source_folder, site_name):
 
 
 def _update_virtualenv(source_folder):
-    """update the virtual environment"""
     virtualenv_folder = source_folder + '/../virtualenv'
     if not exists(virtualenv_folder + '/bin/pip'):
         run(f'python3.6 -m venv {virtualenv_folder}')
@@ -58,7 +53,6 @@ def _update_virtualenv(source_folder):
 
 
 def _update_static_files(source_folder):
-    """update static files"""
     run(
         f'cd {source_folder}'
         ' && ../virtualenv/bin/python manage.py collectstatic --noinput'
@@ -66,7 +60,6 @@ def _update_static_files(source_folder):
 
 
 def _update_database(source_folder):
-    """update the database"""
     run(
         f'cd {source_folder}'
         ' && ../virtualenv/bin/python manage.py migrate --noinput'
