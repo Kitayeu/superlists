@@ -25,23 +25,23 @@ class NewVisitorTest(FunctionalTest):
 
         # Она набирает в текстовом поле "Купить павлиньи перья" (ее хобби –
         # вязание рыболовных мушек)
-        inputbox.send_keys('Купить павлиньи перья')
+        inputbox.send_keys('Buy peacock feathers')
 
         # Когда она нажимает enter, страница обновляется, и теперь страница
         # содержит "1: Купить павлиньи перья" в качестве элемента таблицы списка
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Купить павлиньи перья')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
         # Текстовое поле по-прежнему приглашает ее добавить еще один элемент.
         # Она вводит "Сделать мушку из павлиньих перьев"
         # (Эдит очень методична)
         inputbox = self.browser.find_element_by_id('id_new_item')
-        inputbox.send_keys('Сделать мушку из павлиньих перьев')
+        inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
 
         # Страница снова обновляется, и теперь показывает оба элемента ее списка
-        self.wait_for_row_in_list_table('1: Купить павлиньи перья')
-        self.wait_for_row_in_list_table('2: Сделать мушку из павлиньих перьев')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+        self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
         # Эдит интересно, запомнит ли сайт ее список. Далее она видит, что
         # сайт сгенерировал для нее уникальный URL-адрес – об этом
@@ -55,9 +55,9 @@ class NewVisitorTest(FunctionalTest):
         # Эдит начинает новый список
         self.browser.get(self.live_server_url)
         inputbox = self.browser.find_element_by_id('id_new_item')
-        inputbox.send_keys('Купить павлиньи перья')
+        inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Купить павлиньи перья')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
         # Она замечает, что ее список имеет уникальный URL-адрес
         edith_list_url = self.browser.current_url
@@ -73,15 +73,15 @@ class NewVisitorTest(FunctionalTest):
         # Фрэнсис посещает домашнюю страницу. Нет никаких признаков списка Эдит
         self.browser.get(self.live_server_url)
         page_text = self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('Купить павлиньи перья', page_text)
-        self.assertNotIn('Сделать мушку', page_text)
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertNotIn('make a fly', page_text)
 
         # Фрэнсис начинает новый список, вводя новый элемент. Он менее
         # интересен, чем список Эдит...
         inputbox = self.browser.find_element_by_id('id_new_item')
-        inputbox.send_keys('Купить молоко')
+        inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Купить молоко')
+        self.wait_for_row_in_list_table('1: Buy milk')
 
         # Фрэнсис получает уникальный URL-адрес
         francis_list_url = self.browser.current_url
@@ -90,7 +90,7 @@ class NewVisitorTest(FunctionalTest):
 
         # Опять-таки, нет ни следа от списка Эдит
         page_text = self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('Купить павлиньи перья', page_text)
-        self.assertIn('Купить молоко', page_text)
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertIn('Buy milk', page_text)
 
         # Удовлетворенные, они оба ложатся спать

@@ -51,15 +51,15 @@ class ListViewTest(TestCase):
         Item.objects.create(text='itemey 1', list=correct_list)
         Item.objects.create(text='itemey 2', list=correct_list)
         other_list = List.objects.create()
-        Item.objects.create(text='другой элемент 1 списка', list=other_list)
-        Item.objects.create(text='другой элемент 2 списка', list=other_list)
+        Item.objects.create(text='other list item 1', list=other_list)
+        Item.objects.create(text='other list item 2', list=other_list)
 
         response = self.client.get(f'/lists/{correct_list.id}/')
 
         self.assertContains(response, 'itemey 1')
         self.assertContains(response, 'itemey 2')
-        self.assertNotContains(response, 'другой элемент 1 списка')
-        self.assertNotContains(response, 'другой элемент 2 списка')
+        self.assertNotContains(response, 'other list item 1')
+        self.assertNotContains(response, 'other list item 2')
 
     def test_passes_correct_list_to_template(self):
         other_list = List.objects.create()
