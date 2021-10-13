@@ -1,9 +1,11 @@
 import uuid
 
-from django.contrib import auth
 from django.db import models
+from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.models import update_last_login
 
-auth.signals.user_logged_in.disconnect(auth.models.update_last_login)
+user_logged_in.disconnect(update_last_login)
+
 
 class User(models.Model):
     email = models.EmailField(primary_key=True)

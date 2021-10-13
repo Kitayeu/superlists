@@ -3,9 +3,9 @@ from accounts.models import User, Token
 
 class PasswordlessAuthenticationBackend(object):
 
-    def authenticate(self, uid):
+    def authenticate(self, *args, **kwargs):
         try:
-            token = Token.objects.get(uid=uid)
+            token = Token.objects.get(uid=kwargs['uid'])
             return User.objects.get(email=token.email)
         except User.DoesNotExist:
             return User.objects.create(email=token.email)
