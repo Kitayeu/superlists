@@ -4,6 +4,7 @@ from .base import FunctionalTest
 from .list_page import ListPage
 from .my_lists_page import MyListsPage
 
+
 def quit_if_possible(browser):
     try:
         browser.quit()
@@ -27,6 +28,7 @@ class SharingTest(FunctionalTest):
 
         # Эдит открывает домашнюю страницу и начинает новый список
         self.browser = edith_browser
+        self.browser.get(self.live_server_url)
         list_page = ListPage(self).add_list_item('Get help')
 
         # Она замечает опцию "Поделиться этим списком"
