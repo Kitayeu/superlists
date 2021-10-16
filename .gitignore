@@ -126,4 +126,4 @@ venv.bak/
 dmypy.json
 
 # screendumps
-/functional_tests.screendumps/
+/functional_tests/screendumps/
