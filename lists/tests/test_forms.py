@@ -1,7 +1,8 @@
+from django.test import TestCase
+
 import unittest
 from unittest.mock import patch, Mock
 
-from django.test import TestCase
 from lists.models import Item, List
 from lists.forms import (
     EMPTY_ITEM_ERROR, DUPLICATE_ITEM_ERROR,

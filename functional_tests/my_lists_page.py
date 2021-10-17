@@ -1,6 +1,3 @@
-from .base import wait
-
-
 class MyListsPage(object):
 
     def __init__(self, test):

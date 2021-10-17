@@ -1,7 +1,7 @@
-from django.utils.html import escape
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
+from django.utils.html import escape
 
 import unittest
 from unittest.mock import patch, Mock

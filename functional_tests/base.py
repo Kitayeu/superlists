@@ -1,9 +1,12 @@
 import os
-from datetime import datetime
+
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium import webdriver
+
 import time
+from datetime import datetime
+
+from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 
@@ -46,7 +49,7 @@ class FunctionalTest(StaticLiveServerTestCase):
                 os.makedirs(SCREEN_DUMP_LOCATION)
             for ix, handle in enumerate(self.browser.window_handles):
                 self._windowid = ix
-                self.browser.switch_to_window(handle)
+                self.browser.switch_to.window(handle)
                 self.take_screenshot()
                 self.dump_html()
         self.browser.quit()
@@ -114,8 +117,8 @@ class FunctionalTest(StaticLiveServerTestCase):
             session_key = create_session_on_server(self.staging_server, email)
         else:
             session_key = create_pre_authenticated_session(email)
-        ## to set a cookie we need to first visit the domain.
-        ## 404 pages load the quickest!
+        # to set a cookie we need to first visit the domain.
+        # 404 pages load the quickest!
         self.browser.get(self.live_server_url + "/404_no_such_url/")
         self.browser.add_cookie(dict(
             name=settings.SESSION_COOKIE_NAME,
